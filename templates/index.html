@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SigiTool</title>
+    <!-- Link to Bootstrap for easy styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue spectrum background */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+        padding: 10px 0;
+        background-color: #f8f9fa; /* Light gray background for the footer */
+        border-top: 1px solid #e0e0e0;
+        }
+        footer p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #5a5a5a; /* Subtle dark gray text color */
+        }
+        footer a {
+        text-decoration: none;
+        color: #007bff; /* Bootstrap blue for the link */
+        }
+        footer a:hover {
+        text-decoration: underline;
+        }
+
+        img.logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/Bilisaf.PNG') }}" alt="BiliSaf Logo" class="logo">
+       <!-- <h2>Neonatal Jaundice Decision Aid</h2>-->
+
+        <!-- Form with elements stacked vertically -->
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="option">Select Treatment Option</label>
+                <select class="form-control" id="option" name="option">
+                    <option value="Phototherapy 38+" selected>Phototherapy 38+</option>
+                    <option value="Phototherapy 35-37">Phototherapy 35-37</option>
+                    <option value="Exchange 38+">Exchange 38+</option>
+                    <option value="Exchange 35-37">Exchange 35-37</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Enter Age in Hours</label>
+                <input type="text" class="form-control" id="age" name="age" placeholder="Enter age in hours">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <!-- Error message display (if any) -->
+        {% if error %}
+        <div class="alert alert-danger mt-3">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <footer class="container-fluid mt-5">
+        <div class="row">
+            <div class="col text-left">
+                <p>SigiTools 2024 &copy;</p>
+            </div>
+            <div class="col text-right">
+                <p><a href="https://drive.google.com/file/d/1WUnuX0qnQ4L-WKKGejstFbeP33BjU-oT/view?usp=share_link" target="_blank">
+                    Israel Neonatal Society Guidelines</a></p>
+            </div>
+        </div>
+    </footer>
+    
+
+</body>
+</html>

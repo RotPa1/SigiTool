@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SigiTool - Neonatal Jaundice Decision</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e3f2fd;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        h1 {
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SigiTool - Neonatal Jaundice Decision</h1>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="POST" action="/">
+            <!-- Form fields -->
+            <select name="option">
+                <option value="Phototherapy 38+" selected>Phototherapy 38+</option>
+                <option value="Phototherapy 35-37">Phototherapy 35-37</option>
+                <option value="Exchange 38+">Exchange 38+</option>
+                <option value="Exchange 35-37">Exchange 35-37</option>
+            </select>
+            <input type="text" name="age" placeholder="Enter age in hours">
+            <button type="submit">Submit</button>
+        </form>
+        
+    </div>
+</body>
+</html>
