@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - SigiTool</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e0f7fa; /* Lighter blue for a fresher look */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 80px; /* More space from top */
+            max-width: 500px; /* Center align with a max-width */
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Padding inside the container */
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .btn-primary {
+            background-color: #0288d1; /* Darker blue */
+            border: none;
+            padding: 10px;
+        }
+        .btn-primary:hover {
+            background-color: #01579b; /* Hover effect */
+        }
+        footer {
+            padding: 15px 0;
+            background-color: #f1f1f1;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/bilisaf.png') }}" alt="Bilirubin Threshold Tool" class="logo">
+        <h1>Results</h1>
+        <p><strong>Option chosen:</strong> {{ option }}</p>
+        <p><strong>Age in hours:</strong> {{ age }}</p>
+        <p><strong>Threshold with risk factors:</strong> {{ with_risk }}</p>
+        <p><strong>Threshold without risk factors:</strong> {{ without_risk }}</p>
+        
+        <form action="/new" method="GET">
+            <button type="submit" class="btn btn-primary">New Entry</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <footer class="container-fluid mt-5">
+        <div class="row">
+            <div class="col text-left">
+                <p>SigiTools 2024 &copy;</p>
+            </div>
+            <div class="col text-right">
+                <p><a href="https://drive.google.com/file/d/1WUnuX0qnQ4L-WKKGejstFbeP33BjU-oT/view?usp=share_link" target="_blank">
+                    Israel Neonatal Society Guidelines</a></p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

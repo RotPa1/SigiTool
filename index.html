@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SigiTool</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e0f7fa; /* Lighter blue for a fresher look */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 80px; /* More space from top */
+            max-width: 500px; /* Center align with a max-width */
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px; /* Padding inside the container */
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .btn-primary {
+            background-color: #0288d1; /* Darker blue */
+            border: none;
+            padding: 10px;
+        }
+        .btn-primary:hover {
+            background-color: #01579b; /* Hover effect */
+        }
+        .error {
+            border-color: #ff4d4d; /* Red border on error */
+        }
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='bilisaf.png') }}" alt="Bilirubin Threshold Tool" class="logo">
+        <h2>Neonatal Jaundice Decision Aid</h2>
+
+        <!-- Form with elements stacked vertically -->
+        <form id="jaundiceForm" method="POST" action="/">
+            <div class="form-group">
+                <label for="option">Select Treatment Option</label>
+                <select class="form-control" id="option" name="option">
+                    <option value="Phototherapy 38+" selected>Phototherapy 38+</option>
+                    <option value="Phototherapy 35-37">Phototherapy 35-37</option>
+                    <option value="Exchange 38+">Exchange 38+</option>
+                    <option value="Exchange 35-37">Exchange 35-37</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Enter Age in Hours</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="Enter age in hours">
+                <span class="error-message" id="ageError">Please enter a valid age (1-720 hours).</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('jaundiceForm').addEventListener('submit', function(event) {
+            const ageInput = document.getElementById('age');
+            const age = ageInput.value;
+            const ageError = document.getElementById('ageError');
+            
+            // Basic validation: age must be a number between 1 and 720 hours
+            if (!age || isNaN(age) || age < 1 || age > 720) {
+                event.preventDefault(); // Prevent form submission
+                ageInput.classList.add('error'); // Add red border
+                ageError.style.display = 'block'; // Show error message
+            } else {
+                ageInput.classList.remove('error'); // Remove red border
+                ageError.style.display = 'none'; // Hide error message
+            }
+        });
+    </script>
+    <footer class="container-fluid mt-5">
+        <div class="row">
+            <div class="col text-left">
+                <p>SigiTools 2024 &copy;</p>
+            </div>
+            <div class="col text-right">
+                <p><a href="https://drive.google.com/file/d/1WUnuX0qnQ4L-WKKGejstFbeP33BjU-oT/view?usp=share_link" target="_blank">
+                    Israel Neonatal Society Guidelines</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
