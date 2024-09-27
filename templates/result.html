@@ -60,6 +60,28 @@
             max-width: 72%;
             height: auto;
         }
+
+        .risk-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .risk-table th, .risk-table td {
+            padding: 12px;
+            text-align: center;
+        }
+        .low-risk {
+            background-color: #cce7ff;
+        }
+        .low-intermediate-risk {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .high-intermediate-risk {
+            background-color: #fff5cc;
+        }
+        .high-risk {
+            background-color: #ffebcc;
+        }
     </style>
     
 </head>
@@ -71,6 +93,34 @@
         <p><strong>Age in hours:</strong> {{ age }}</p>
         <p><strong>Threshold with risk factors:</strong> {{ with_risk }}</p>
         <p><strong>Threshold without risk factors:</strong> {{ without_risk }}</p>
+         
+        <!-- Risk Zone Table -->
+         <table class="table table-bordered risk-table">
+            <thead>
+                <tr>
+                    <th>Risk Zone</th>
+                    <th>Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="low-risk">
+                    <td>Low Risk Zone</td>
+                    <td>&lt; {{ low_risk }}</td>
+                </tr>
+                <tr class="low-intermediate-risk">
+                    <td>Low Intermediate Risk Zone</td>
+                    <td>{{ low_risk }} - {{ intermediate_risk }}</td>
+                </tr>
+                <tr class="high-intermediate-risk">
+                    <td>High Intermediate Risk Zone</td>
+                    <td>{{ intermediate_risk }} - {{ high_risk }}</td>
+                </tr>
+                <tr class="high-risk">
+                    <td>High Risk Zone</td>
+                    <td>&gt; {{ high_risk }}</td>
+                </tr>
+            </tbody>
+        </table>
         
         <form action="/new" method="GET">
             <button type="submit" class="btn btn-primary">New Entry</button>

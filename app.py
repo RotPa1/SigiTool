@@ -7,6 +7,7 @@ app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 
 # Load the dataset once when the app starts
 data = pd.read_excel('JaundiceTH.xlsx')
+bhutani_data = pd.read_excel('Bhutani.xlsx')
 
 # Function to get thresholds for a given age
 def get_threshold(age):
@@ -24,6 +25,19 @@ def get_threshold(age):
        'with_risk_factors': round(thresholds['with risk factors'], 2),
         'without_risk_factors': round(thresholds['without risk factors'], 2)
     }
+
+# Function to get Bhutani limits for the relevant age in hours
+def get_bhutani_limits(age):
+      if age > 147:
+        age = 169
+    # Get the row matching the age
+    row = bhutani_data.loc[bhutani_data['Age in hours'] == age]
+    if not row.empty:
+        low_risk = row['Low Risk Limit'].values[0]
+        intermediate_risk = row['Intermediate Risk Limit'].values[0]
+        high_risk = row['High Risk Limit'].values[0]
+        return low_risk, intermediate_risk, high_risk
+    return None, None, None
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -46,6 +60,26 @@ def index():
             return render_template('index.html', error="Please enter a valid number for age.")
     
     return render_template('index.html')
+
+@app.route('/result', methods=['POST'])
+def result():
+    age = int(request.form['age'])
+    option = request.form['option']
+    with_risk = float(request.form['with_risk'])
+    without_risk = float(request.form['without_risk'])
+    
+    # Get Bhutani limits for the given age
+    low_risk, intermediate_risk, high_risk = get_bhutani_limits(age)
+    
+    # Render result page with Bhutani data
+    return render_template('result.html', 
+                           option=option, 
+                           age=age, 
+                           with_risk=with_risk, 
+                           without_risk=without_risk, 
+                           low_risk=low_risk, 
+                           intermediate_risk=intermediate_risk, 
+                           high_risk=high_risk)
 
 @app.route('/new', methods=['GET'])
 def new_entry():
