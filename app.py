@@ -28,8 +28,8 @@ def get_threshold(age):
 
 # Function to get Bhutani limits for the relevant age in hours
 def get_bhutani_limits(age):
-      if age > 147:
-        age = 169
+    if age > 147:
+        age = 127
     # Get the row matching the age
     row = bhutani_data.loc[bhutani_data['Age in hours'] == age]
     if not row.empty:
