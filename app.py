@@ -26,16 +26,16 @@ def get_threshold(age):
         'without_risk_factors': round(thresholds['without risk factors'], 2)
     }
 
-# Function to get Bhutani limits for the relevant age in hours
+# Function to get Bhutani limits for the relevant age in hours 
+
+
 def get_bhutani_limits(age):
-    if age > 147:
-        age = 127
-    # Get the row matching the age
     row = bhutani_data.loc[bhutani_data['Age in hours'] == age]
     if not row.empty:
         low_risk = row['Low Risk Limit'].values[0]
         intermediate_risk = row['Intermediate Risk Limit'].values[0]
         high_risk = row['High Risk Limit'].values[0]
+        print(f"Low Risk: {low_risk}, Intermediate Risk: {intermediate_risk}, High Risk: {high_risk}")
         return low_risk, intermediate_risk, high_risk
     return None, None, None
 
