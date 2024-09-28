@@ -95,33 +95,38 @@
         <p><strong>Threshold with risk factors:</strong> {{ with_risk }} mg/dL </p>
         <p><strong>Threshold without risk factors:</strong> {{ without_risk }} mg/dL </p>
          
-        <!-- Risk Zone Table -->
-         <table class="table table-bordered risk-table">
-            <thead>
-                <tr>
-                    <th>Risk Zone by Bhutani</th>
-                    <th>Level (mg/dL)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="low-risk">
-                    <td>Hige Risk Zone</td>
-                    <td>&gt; {{ low_risk }}</td>
-                </tr>
-                <tr class="low-intermediate-risk">
-                    <td>High Intermediate Risk Zone</td>
-                    <td>{{ low_risk }} - {{ high_risk }}</td>
-                </tr>
-                <tr class="high-intermediate-risk">
-                    <td>Low Intermediate Risk Zone</td>
-                    <td>{{ high_risk }} - {{ intermediate_risk }} </td>
-                </tr>
-                <tr class="high-risk">
-                    <td>Low Risk Zone</td>
-                    <td>&lt; {{ intermediate_risk }}</td>
-                </tr>
-            </tbody>
-        </table>
+        {% if message %}
+        <!-- Show message if age is less than 12 hours -->
+        <div class="alert alert-warning">{{ message }}</div>
+        {% else %}
+            <!-- Risk Zone Table -->
+            <table class="table table-bordered risk-table">
+                <thead>
+                    <tr>
+                        <th>Risk Zone by Bhutani</th>
+                        <th>Level (mg/dL)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="low-risk">
+                        <td>Hige Risk Zone</td>
+                        <td>&gt; {{ high_risk }}</td>
+                    </tr>
+                    <tr class="low-intermediate-risk">
+                        <td>High Intermediate Risk Zone</td>
+                        <td>{{ intermediate_risk }} - {{ high_risk }}</td>
+                    </tr>
+                    <tr class="high-intermediate-risk">
+                        <td>Low Intermediate Risk Zone</td>
+                        <td>{{ low_risk }} - {{ intermediate_risk }} </td>
+                    </tr>
+                    <tr class="high-risk">
+                        <td>Low Risk Zone</td>
+                        <td>&lt; {{ low_risk }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
         
         <form action="/new" method="GET">
             <button type="submit" class="btn btn-primary">New Entry</button>

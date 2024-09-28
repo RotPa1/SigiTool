@@ -28,14 +28,19 @@ def get_threshold(age):
 
 # Function to get Bhutani limits for the relevant age in hours 
 def get_risk_limits(age_hours):
-    # Assuming bhutani_data has a column 'AgeHours' and corresponding risk limits columns
-    row = bhutani_data[bhutani_data['AgeHours'] == age_hours].iloc[0]
-    low_risk = row['LowRiskLimit']
-    intermediate_risk = row['IntermediateRiskLimit']
-    high_risk = row['HighRiskLimit']
-    return {
-        low_risk, intermediate_risk, high_risk
-    }
+    if age_hours>147:
+        age_hours=147
+
+    try:
+        row = bhutani_data[bhutani_data['AgeHours'] == age_hours].iloc[0]
+        low_risk = row['LowRiskLimit']
+        intermediate_risk = row['IntermediateRiskLimit']
+        high_risk = row['HighRiskLimit']
+    except IndexError:
+        # Handle the case where the exact age_hours is not found
+        return None, None, None
+
+    return low_risk, intermediate_risk, high_risk
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -48,6 +53,15 @@ def index():
             age = float(age_input)
             if age < 6:
                 return render_template('index.html', error="Minimal age is 6 hours")
+           
+            # If age is between 6 and 12 hours, show message without table
+            elif age < 12:
+                # Extract the threshold values (with and without risk factors)
+                thresholds = get_threshold(age)
+                message = "Risk Zones by Bhutani applicable for ages > 12 hours"
+                return render_template('result.html', age=age, option=option, 
+                                    with_risk=thresholds['with_risk_factors'], 
+                                    without_risk=thresholds['without_risk_factors'], message=message)
             else:
                 age = round(age)
                 thresholds = get_threshold(age)
