@@ -11,13 +11,21 @@
             font-family: 'Arial', sans-serif;
         }
         .container {
-            margin-top: 60px; /* More space from top */
+            margin-top: 80px; /* More space from top */
             max-width: 500px; /* Center align with a max-width */
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px; /* Padding inside the container */
         }
+        /* Media query for mobile devices */
+    @media (max-width: 768px) {
+        .container {
+            margin-top: 20px; /* Reduce the top margin for mobile */
+            padding: 20px; /* Reduce padding to save space */
+        }
+    }
+
         h1, h2 {
             text-align: center;
             margin-bottom: 30px;
@@ -27,7 +35,6 @@
         }
         .form-group {
             margin-bottom: 25px;
-            text-decoration: underline overline #180201;
         }
         .btn-primary {
             background-color: #0288d1; /* Darker blue */
