@@ -27,17 +27,15 @@ def get_threshold(age):
     }
 
 # Function to get Bhutani limits for the relevant age in hours 
-
-
-def get_bhutani_limits(age):
-    row = bhutani_data.loc[bhutani_data['Age in hours'] == age]
-    if not row.empty:
-        low_risk = row['Low Risk Limit'].values[0]
-        intermediate_risk = row['Intermediate Risk Limit'].values[0]
-        high_risk = row['High Risk Limit'].values[0]
-        print(f"Low Risk: {low_risk}, Intermediate Risk: {intermediate_risk}, High Risk: {high_risk}")
-        return low_risk, intermediate_risk, high_risk
-    return None, None, None
+def get_risk_limits(age_hours):
+    # Assuming bhutani_data has a column 'AgeHours' and corresponding risk limits columns
+    row = bhutani_data[bhutani_data['AgeHours'] == age_hours].iloc[0]
+    low_risk = row['LowRiskLimit']
+    intermediate_risk = row['IntermediateRiskLimit']
+    high_risk = row['HighRiskLimit']
+    return {
+        low_risk, intermediate_risk, high_risk
+    }
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -53,33 +51,15 @@ def index():
             else:
                 age = round(age)
                 thresholds = get_threshold(age)
+                # Get the risk limits for the entered age
+                low_risk, intermediate_risk, high_risk = get_risk_limits(age)
                 return render_template('result.html', option=option, age=age, 
                                        with_risk=thresholds['with_risk_factors'], 
-                                       without_risk=thresholds['without_risk_factors'])
+                                       without_risk=thresholds['without_risk_factors'], low_risk=round(low_risk,2), intermediate_risk=round(intermediate_risk,2), high_risk=round(high_risk,2))
         except ValueError:
             return render_template('index.html', error="Please enter a valid number for age.")
     
     return render_template('index.html')
-
-@app.route('/result', methods=['POST'])
-def result():
-    age = int(request.form['age'])
-    option = request.form['option']
-    with_risk = float(request.form['with_risk'])
-    without_risk = float(request.form['without_risk'])
-    
-    # Get Bhutani limits for the given age
-    low_risk, intermediate_risk, high_risk = get_bhutani_limits(age)
-    
-    # Render result page with Bhutani data
-    return render_template('result.html', 
-                           option=option, 
-                           age=age, 
-                           with_risk=with_risk, 
-                           without_risk=without_risk, 
-                           low_risk=low_risk, 
-                           intermediate_risk=intermediate_risk, 
-                           high_risk=high_risk)
 
 @app.route('/new', methods=['GET'])
 def new_entry():

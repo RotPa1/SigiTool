@@ -21,7 +21,8 @@
         h1, h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #007bff;
+            color: #0288d1;
+            text-shadow: rgb(186, 147, 240) 1px 0 10px;
             font-size: 1.2rem;
         }
         .form-group {
@@ -76,7 +77,7 @@
 <body>
     <div class="container">
         <img src="{{ url_for('static', filename='sigitool.png') }}" alt="Bilirubin Threshold Tool" class="logo">
-        <h2>Bilirubin Thresholds For Treatment</h2>
+        <h2>Bilirubin Thresholds By Age</h2>
 
         <!-- Form with elements stacked vertically -->
         <form id="jaundiceForm" method="POST" action="/">

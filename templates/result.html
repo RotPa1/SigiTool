@@ -21,11 +21,13 @@
         h1, h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #007bff;
-            font-size: 1.2rem;
+            color: #0288d1;
+            text-shadow: rgb(186, 147, 240) 1px 0 10px;
+            font-size: 1.5rem;
         }
         .form-group {
             margin-bottom: 25px;
+            text-decoration: underline overline #180201;
         }
         .btn-primary {
             background-color: #0288d1; /* Darker blue */
@@ -70,17 +72,16 @@
             text-align: center;
         }
         .low-risk {
-            background-color: #cce7ff;
+            background-color: #f3de3f;
         }
         .low-intermediate-risk {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #e3fb79;
         }
         .high-intermediate-risk {
-            background-color: #fff5cc;
+            background-color: #5596f0;
         }
         .high-risk {
-            background-color: #ffebcc;
+            background-color: #b1d8fc;
         }
     </style>
     
@@ -91,33 +92,33 @@
         <h1>Results</h1>
         <p><strong>Option chosen:</strong> {{ option }}</p>
         <p><strong>Age in hours:</strong> {{ age }}</p>
-        <p><strong>Threshold with risk factors:</strong> {{ with_risk }}</p>
-        <p><strong>Threshold without risk factors:</strong> {{ without_risk }}</p>
+        <p><strong>Threshold with risk factors:</strong> {{ with_risk }} mg/dL </p>
+        <p><strong>Threshold without risk factors:</strong> {{ without_risk }} mg/dL </p>
          
         <!-- Risk Zone Table -->
          <table class="table table-bordered risk-table">
             <thead>
                 <tr>
-                    <th>Risk Zone</th>
-                    <th>Level</th>
+                    <th>Risk Zone by Bhutani</th>
+                    <th>Level (mg/dL)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="low-risk">
-                    <td>Low Risk Zone</td>
-                    <td>&lt; {{ low_risk }}</td>
+                    <td>Hige Risk Zone</td>
+                    <td>&gt; {{ low_risk }}</td>
                 </tr>
                 <tr class="low-intermediate-risk">
-                    <td>Low Intermediate Risk Zone</td>
-                    <td>{{ low_risk }} - {{ intermediate_risk }}</td>
+                    <td>High Intermediate Risk Zone</td>
+                    <td>{{ low_risk }} - {{ high_risk }}</td>
                 </tr>
                 <tr class="high-intermediate-risk">
-                    <td>High Intermediate Risk Zone</td>
-                    <td>{{ intermediate_risk }} - {{ high_risk }}</td>
+                    <td>Low Intermediate Risk Zone</td>
+                    <td>{{ high_risk }} - {{ intermediate_risk }} </td>
                 </tr>
                 <tr class="high-risk">
-                    <td>High Risk Zone</td>
-                    <td>&gt; {{ high_risk }}</td>
+                    <td>Low Risk Zone</td>
+                    <td>&lt; {{ intermediate_risk }}</td>
                 </tr>
             </tbody>
         </table>
