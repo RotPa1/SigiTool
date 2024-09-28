@@ -19,13 +19,6 @@
             padding: 30px; /* Padding inside the container */
         }
         /* Media query for mobile devices */
-    @media (max-width: 768px) {
-        .container {
-            margin-top: 20px; /* Reduce the top margin for mobile */
-            padding: 20px; /* Reduce padding to save space */
-        }
-    }
-
         h1, h2 {
             text-align: center;
             margin-bottom: 30px;
@@ -33,6 +26,17 @@
             text-shadow: rgb(186, 147, 240) 1px 0 10px;
             font-size: 1.5rem;
         }
+   
+        @media (max-width: 768px) {
+        .container {
+            margin-top: 10px; /* Reduce the top margin for mobile */
+            padding: 20px; /* Reduce padding to save space */
+        }
+        h1, h2 {
+        margin-bottom: 10px; /* Reduce bottom margin */
+    }
+    }
+
         .form-group {
             margin-bottom: 25px;
         }
