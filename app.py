@@ -6,14 +6,23 @@ app = Flask(__name__)
 app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 
 # Load the dataset once when the app starts
-data = pd.read_excel('JaundiceTH.xlsx')
 bhutani_data = pd.read_excel('Bhutani.xlsx')
 
 # Function to get thresholds for a given age
-def get_threshold(age):
+def get_threshold(age, option):
     if age > 169:
         age = 169
     
+    sheet_name_map = {
+        'Phototherapy 38+': 'Photo38',  
+        'Phototherapy 35-37': 'Photo35',
+        'Exchange 38+': 'Exchange38',
+        'Exchange 35-37': 'Exchange35'
+    }
+
+    sheet_name = sheet_name_map.get(option)
+    data = pd.read_excel('JaundiceTH.xlsx', sheet_name=sheet_name)
+
     # Get the closest matching row in the dataset
     thresholds = data[data['Age in hours'] == age]
     if not thresholds.empty:
@@ -57,14 +66,14 @@ def index():
             # If age is between 6 and 12 hours, show message without table
             elif age < 12:
                 # Extract the threshold values (with and without risk factors)
-                thresholds = get_threshold(age)
+                thresholds = get_threshold(age, option)
                 message = "Risk Zones by Bhutani applicable for ages > 12 hours"
                 return render_template('result.html', age=age, option=option, 
                                     with_risk=thresholds['with_risk_factors'], 
                                     without_risk=thresholds['without_risk_factors'], message=message)
             else:
                 age = round(age)
-                thresholds = get_threshold(age)
+                thresholds = get_threshold(age, option)
                 # Get the risk limits for the entered age
                 low_risk, intermediate_risk, high_risk = get_risk_limits(age)
                 return render_template('result.html', option=option, age=age, 
